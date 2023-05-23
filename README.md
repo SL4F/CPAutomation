@@ -1,5 +1,5 @@
 # [CPAutomation]()
-### All in one Discord SelfBot with 200+ commands, frequent updates and much more!
+### Club Penguin scripts to make your experience a little better with automation!
 ___
 ![CPAutomation image](https://raw.githubusercontent.com/SL4F/CPClient/main/assets/icon.png)
 #### Features 
