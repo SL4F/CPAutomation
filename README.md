@@ -20,6 +20,6 @@ ___
 - Run `newcp_auto_clicker.py`
 - When asked for the money bag location, hover your mouse over where it is
 - The program will then start when you enter `y`
-- To end, go back to command terminal and hit Ctrl+C
+- To end, go back to command terminal and hit `Ctrl+C`
 #### Additional Info
 Made for 2560x1440 monitors; specifically, made for the NewCP client while scrolled all the way up. It may work on other monitor resolutions, though it is untested. Will only work on 16x9. (You can always modify the code for your resolution and it will work.) Also, all images were taken for 1440p, and will not work with other resolutions. I will work on this later.
