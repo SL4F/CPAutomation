@@ -1,4 +1,3 @@
-# Club Penguin Auto Coin Collector (42k/hour)
 # [CPAutomation]()
 ### All in one Discord SelfBot with 200+ commands, frequent updates and much more!
 ___
