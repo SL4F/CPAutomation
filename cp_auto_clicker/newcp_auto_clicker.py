@@ -6,12 +6,9 @@ Authors:
 @ChrisDaDerp
 @ZoomKahow
 '''
- 
-import pyautogui as pg 
-import time
-import random
-import os
-import math
+import pyautogui as pg
+from pynput.mouse import Button , Controller
+import time, random, os, math
 
 DELAY_MOVEMENT = 15
 '''Timer to delay next movement. Default config optimized for mining the most coins.'''
@@ -23,9 +20,9 @@ FOLDER_PATH = "./img/"
 '''Images folder location.'''
 GROUND_COLORS = [[103, 80, 76], [91, 70, 67], [87, 67, 64], [95, 73, 70]]
 '''Ground RGB values list.'''
-GRAYSCALE = True
+GRAYSCALE = False
 '''Grayscale is true by default.'''
-CONFIDENCE = .9
+CONFIDENCE = 0.7
 '''Confidence default.'''
 SPEED = 250
 '''Penguin movement speed, in pixels/sec (measured at 2560x1440).'''
@@ -47,6 +44,13 @@ class AutoClicker():
     __screen_height = 0
     __width_range = 0
     __height_range = 0
+    # Set money bag position
+    mouse = Controller()
+    print("""Open your puffle menu and hover over the money bag
+    Saving money bag position in 5 seconds...""")
+    time.sleep(5)
+    money_icon_location = mouse.position
+    print('Saved money bag')
 
     def __init__(self):
         self.__size = SIZE
@@ -68,7 +72,6 @@ class AutoClicker():
         # Coordinates for calculating a random integer to be clicked on.
         self.__width_range = round(self.__width*.7988)
         self.__height_range =  round(self.__height*.8924)
-
 
     def __print_screen_size(self):
         '''Prints screen size. For debugging.'''
@@ -111,10 +114,11 @@ class AutoClicker():
         # Figures out which Puffle you have and sets that as the default for as long as the program runs.
         if self.__puffle == None:
             for image in os.listdir(FOLDER_PATH + "puffles/"):
-                if pg.locateOnScreen(FOLDER_PATH + "puffles/" + image, grayscale=self.__debug, confidence=CONFIDENCE):
+                if pg.locateOnScreen(FOLDER_PATH + "puffles/" + image, grayscale=GRAYSCALE, confidence=CONFIDENCE):
                     self.__puffle = FOLDER_PATH + "puffles/" + image
                     if self.__debug == True:
                         print("Puffle found: " + image)
+                        break
                     break
             if self.__puffle == None:
                 self.__puffle = False
@@ -126,11 +130,15 @@ class AutoClicker():
             pg.click(puffle_icon_location)
             time.sleep(DELAY_TIME)
             # Finds money bag on the screen and clicks it, if it is ready.
-            money_icon_location = pg.locateCenterOnScreen(FOLDER_PATH + "money_icon.png", grayscale=GRAYSCALE, confidence=CONFIDENCE)
-            if self.__debug == True:
-                if money_icon_location == None:
-                    print("Puffle money icon either not found or not yet ready to be collected.")
-            pg.click(money_icon_location)
+            #for image in os.listdir(FOLDER_PATH + "money_icons/"):
+            #    if pg.locateOnScreen(FOLDER_PATH + "money_icons/" + image, grayscale=GRAYSCALE, confidence=CONFIDENCE):
+            #        money_icon_location = FOLDER_PATH + "money_icons/" + image
+            #            if self.__debug == True:
+            #                if money_icon_location == None:
+            #                    print("Puffle money icon either not found or not yet ready to be collected.")
+            #                if money_icon_location != None:
+            #                    print("Puffle money found: " + image)
+            pg.click(self.money_icon_location)
             time.sleep(DELAY_TIME)
         except:
             if self.__debug == True:
@@ -183,6 +191,8 @@ class AutoClicker():
 def main():
     '''Creates and runs auto clicker.'''
     start = input("Run auto clicker? (y/n): ")
+    time.sleep(5)
+    os.system('cls' if os.name == 'nt' else 'clear')
     if start.lower() == "y" or "d":
         auto_clicker = AutoClicker()
         print("Running... (Ctrl + C while this window is selected to end.)")
